@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.authorizeRequests()
 		.antMatchers("/","/resources/**").permitAll()
 		.antMatchers("/student/viewall").hasRole("ADMIN")
-		.antMatchers("/student/view/**").hasRole("USER")
+		.antMatchers("/student/view/**").hasAnyRole("ADMIN","USER")
 		.anyRequest().authenticated()
 		.and()
 		.formLogin()
@@ -32,20 +32,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.permitAll();
 	}
 
-	/*@Autowired
+	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth
 		.inMemoryAuthentication()
-		.withUser("admin").password("admin").roles("ADMIN")
+		.withUser("admin").password("{noop}admin").roles("ADMIN")
 		.and()
-		.withUser("user").password("user").roles("USER");
-	}*/
-	
-	@Autowired
-	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-		auth
-		.jdbcAuthentication().dataSource(dataSource)
-		.usersByUsernameQuery("select username,password,enabled from users where username=?")
-		.authoritiesByUsernameQuery("select username, role from user_roles where username=?");
+		.withUser("user").password("{noop}user").roles("USER");
 	}
+	
+//	@Autowired
+//	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+//		auth
+//		.jdbcAuthentication().dataSource(dataSource)
+//		.usersByUsernameQuery("select username,password,enabled from users where username=?")
+//		.authoritiesByUsernameQuery("select username, role from user_roles where username=?");
+//	}
 }
