@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>View All Students</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+	 	<link th:href="@{/main.css}" rel="stylesheet"/>
+    </head>
+    <body>
+    
+    <h2 th:text=" 'Login as ' + ${#httpServletRequest.remoteUser}">Login as</h2>
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Sign Out" />
+	</form>
+	
+     <div th:replace="fragments/fragment :: header"></div>
+        <h1 align="center">All Students</h1>
+        
+        <table id="example" class="table table-bordered">
+	        <thead align="center">
+	            <tr>
+	                <th><h3>No</h3></th>
+	                <th><h3>NPM</h3></th>
+	                <th><h3>Name</h3></th>
+	                <th><h3>GPA</h3></th>
+	                <th><h3>Cumlaude</h3></th>
+	                <th colspan="2"><h3></h3></th>
+	                
+	            </tr>
+	        </thead>
+	        <tbody align="center">
+		        <tr th:each="student,iterationStatus: ${students}" th:class="${iterationStatus.odd} ? 'odd'">
+		        	<td><p th:text="${iterationStatus.count}">No. 1</p></td>
+		        	<td><p th:text="${student.npm}">Student NPM</p></td>
+		        	<td><p th:text="${student.name}">Student Name</p></td>
+		        	<td><p th:text="${student.gpa}">Student GPA</p></td>
+		        	<td><p th:text="(${student.gpa>=3.49}) ? 'Cumlaude!' : 'Sangat Memuaskan!'"></p></td>
+		        	<td><a th:href="'/student/delete/' + ${student.npm}">
+		        	<button type="button" class="btn btn-danger" name="action" value="delete">Delete</button></a> </td>
+		        	</br>
+		        	<td><a th:href="'/student/update/' + ${student.npm}">
+		        	<button type="button" class="btn btn-primary" name="action" value="update">Update</button></a> </td>
+		        	</br>
+		        </tr>
+	        </tbody>
+	        
+	    </table>
+	    <div th:replace="fragments/fragment :: footer"></div>
+    </body>
+    <script th:src="@{/DataTables/datatables-1.10.16/js/jquery.dataTables.min.js}">
+	    $(document).ready(function() {
+	    $('#example').DataTable({
+    			stateSave: true
+    		});
+		} );
+	</script>
+</html>

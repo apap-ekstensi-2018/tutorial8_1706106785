@@ -1,0 +1,23 @@
+<!doctype HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common_header(content)">
+<title>Index</title>
+<link th:fragment="script" rel="stylesheet" href="/bootstrap-4.0.0-dist/css/bootstrap.min.css" />
+</head>
+<body>
+	<h2>Welcome</h2>
+	<div>
+		<a href="/login">Login</a>
+	</div>
+	<div>
+		<a th:if="${#httpServletRequest.isUserInRole('ADMIN')}" href="/student/viewall">View All Student</a><br/>
+	</div>
+	<div th:if="${#httpServletRequest.isUserInRole('USER')} or ${#httpServletRequest.isUserInRole('ADMIN')}">
+		<h2>View by NPM</h2>
+		<form action="/student/view/" method="get">
+			<input type="text" name="npm"/>
+			<button type="submit">Cari</button>
+		</form>
+	</div>
+</body>
+</html>

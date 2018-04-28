@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html   xmlns:th = "http://www.thymeleaf.org">
+<head>
+<title> Fragment </title>
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/DataTables/css/datatables.min.css" />
+    <script src="/DataTables/js/datatables.min.js"></script>
+</head>
+
+<body>
+   <div th:fragment="header">
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	 			<a class="navbar-brand" href="#">Navbar</a>
+	 			<button class="navbar-toggler" type="button" data-toggle="collapse"
+					 data-target="#navbarSupportedContent"
+					 aria-controls="navbarSupportedContent" aria-expanded="false"
+					 aria-label="Toggle navigation">
+					 <span class="navbar-toggler-icon"></span>
+	 			</button>
+ 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		 			<ul class="navbar-nav mr-auto">
+			 			
+			 			<li class="nav-item" th:classappend="${#httpServletRequest.getRequestURI()=='/' ? 'active':''}">
+				 		<a class="nav-link" th:href="@{/}">Home</a>
+						</li>
+						
+						<li class="nav-item" th:classappend="${#httpServletRequest.getRequestURI()=='/student/viewall' ? 'active':''}">
+						 	<a class="nav-link" th:href="@{/student/viewall}">Daftar Mahasiswa</a>
+						</li>
+						
+						<li class="nav-item" th:classappend="${#httpServletRequest.getRequestURI()=='/student/add' ? 'active':''}">
+						 	<a class="nav-link" th:href="@{/student/add}">Menambah Mahasiswa</a>
+					    </li>
+		 			
+		 			</ul>
+		 			<form action="/student/view" method="get">
+						 <input class="ts-form-search" type="text" placeholder="Search" aria-label="Search" name="npm" />
+		 				<button class="btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		 			</form>
+ 				</div>
+ 			</nav>
+		</div>
+
+   <div th:fragment = "footer">
+     <hr/>
+     <h4> Mata Kuliah APAP </h4>
+   </div>
+</body>
+
+</html>
